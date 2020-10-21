@@ -1,0 +1,108 @@
+Flutter Project in VS Code
+
+1. view->commandPla->Flutter New Project
+2. Delete auto generate code and paste that stuff
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+import 'package:flutter/material.dart';
+
+// Import the firebase_core plugin
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(App());
+}
+
+class App extends StatefulWidget {
+  _AppState createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      home: MyHomePage(),
+    );
+  }
+}
+
+class MyHomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // Map<String, String> da = {"name": "shivam", "comap": "google"};
+    CollectionReference users = FirebaseFirestore.instance.collection('dsa');
+    Future<void> addUser() {
+      // Call the user's CollectionReference to add a new user
+      return users
+          .add({
+            'full_name': "Rashmi",
+            'company': "Gouri",
+            'age': 41 // 42
+          })
+          .then((value) => print("User Added"))
+          .catchError((error) => print("Failed to add user: $error"));
+    }
+
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            FlatButton(
+              textColor: Color(0xFF6200EE),
+              highlightColor: Colors.transparent,
+              onPressed: addUser,
+              child: Text("TEXT BUTTON"),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+3. Go to firebase create project as mentioned step
+
+----------------------------------------------------
+
+4. Come to your project
+
+add following code:
+
+pubspec.yaml
+
+dependencies:
+  flutter:
+    sdk: flutter
+    
+    
+  firebase_core: "0.5.0+1"
+  cloud_firestore: ^0.14.1+3
+  firebase_auth:
+  firebase_storage:
+
+
+5. In app/build.gradle
+
+    defaultConfig {
+        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
+        applicationId "com.example.checkmode"
+        minSdkVersion 16
+        targetSdkVersion 29
+        multiDexEnabled true
+        versionCode flutterVersionCode.toInteger()
+        versionName flutterVersionName
+    }
+    
+    dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'com.android.support:multidex:1.0.3'
+}
