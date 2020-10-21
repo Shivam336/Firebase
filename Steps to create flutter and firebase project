@@ -71,6 +71,8 @@ class MyHomePage extends StatelessWidget {
 
 3. Go to firebase create project as mentioned step
 
+select time zone as asia-south1
+
 ----------------------------------------------------
 
 4. Come to your project
